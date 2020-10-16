@@ -253,4 +253,4 @@ const Database = {
   },
 };
 
-console.log(Database.findOne());
+console.log(Database.findOne({ id: 2 }));
