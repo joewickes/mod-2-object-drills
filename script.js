@@ -182,11 +182,75 @@ const HEROES = [
   { id: 7, name: 'Hulk', squad: 'Avengers' },
 ];
 
-const findOne = (heroArr, testQuery) => {
-  return;
+const findOne = (arr, query) => {
+  let totalParam = 0;
+
+  for (const param in query) {
+    totalParam++;
+  }
+
+  arr.forEach((hero) => {
+    hero.matching = 0;
+    for (const param in query) {
+      if (query[param] === hero[param]) {
+        hero.matching += 1;
+      }
+    }
+  });
+
+  let matchingHero = arr.find((hero) => hero.matching === totalParam);
+
+  if (matchingHero === undefined) {
+    return null;
+  } else {
+    delete matchingHero.matching;
+    return matchingHero;
+  }
 };
+
 
 console.log(findOne(HEROES, { id: 2, name: 'Aquaman' }));
 
 
-// 8a. BONUS: A Database Method
+// 8a. BONUS: A Database Method]
+const Database = {
+  store: {
+    heroes: [
+      { id: 1, name: 'Captain America', squad: 'Avengers' },
+      { id: 2, name: 'Iron Man', squad: 'Avengers' },
+      { id: 3, name: 'Spiderman', squad: 'Avengers' },
+      { id: 4, name: 'Superman', squad: 'Justice League' },
+      { id: 5, name: 'Wonder Woman', squad: 'Justice League' },
+      { id: 6, name: 'Aquaman', squad: 'Justice League' },
+      { id: 7, name: 'Hulk', squad: 'Avengers' },
+    ]
+  },
+  findOne(query) {
+    let totalParam = 0;
+    const arr = this.store.heroes;
+  
+    for (const param in query) {
+      totalParam++;
+    }
+  
+    arr.forEach((hero) => {
+      hero.matching = 0;
+      for (const param in query) {
+        if (query[param] === hero[param]) {
+          hero.matching += 1;
+        }
+      }
+    });
+  
+    let matchingHero = arr.find((hero) => hero.matching === totalParam);
+  
+    if (matchingHero === undefined) {
+      return null;
+    } else {
+      delete matchingHero.matching;
+      return matchingHero;
+    }
+  },
+};
+
+console.log(Database.findOne());
